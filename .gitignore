@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local development settings
+*.env
+
+# Database
+*.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Virtual environment
+venv/
+__venv/
+*.venv/
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs and backups
+*.log
+*.bak
+
+# Compiled Python files
+*.pyc
+
+# Caches
+__pycache__/
+
+# Ignore Django migration files
+*.py[co]
+__pycache__/o
+db.sqlite3
+db.sqlite3-journal
+
+# Ignore pipenv virtual environment
+Pipfile
+Pipfile.lock
+
+# Ignore coverage reports
+.coverage
+htmlcov/
+
+# Ignore test database
+test_db.sqlite3
+
+# Ignore Docker files
+Dockerfile
+docker-compose.yml
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore poetry files
+poetry.lock
+pyproject.toml

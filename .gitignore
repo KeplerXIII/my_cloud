@@ -54,7 +54,7 @@ test_db.sqlite3
 
 # Ignore Docker files
 Dockerfile
-docker-compose.yml
+# docker-compose.yml
 
 # Ignore macOS system files
 .DS_Store

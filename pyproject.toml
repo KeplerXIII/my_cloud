@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "my-cloud"
+version = "0.1.0"
+description = "My qualifiying work. Backend part."
+authors = ["Alexander Pushkin (Home) <a.v.pushkin@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+psycopg2-binary = "^2.9.9"
+django = "^5.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

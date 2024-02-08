@@ -65,3 +65,6 @@ Dockerfile
 # Ignore poetry files
 poetry.lock
 pyproject.toml
+
+# Storage
+uploads/

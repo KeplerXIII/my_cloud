@@ -1,48 +1,53 @@
-import { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
-const RegistrationForm = () => {
-  // Состояния для хранения данных формы
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
-  // Обработчик изменения полей формы
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    if (name === 'username') setUsername(value)
-    else if (name === 'password') setPassword(value)
-    else if (name === 'email') setEmail(value)
-  }
-  // Обработчик отправки формы
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    // Опционально: валидация данных формы перед отправкой на бэкенд
-    // Создание объекта с данными формы
-    const formData = {
-      username: username,
-      password: password,
-      email: email,
-    }
+interface FormData {
+  username: string;
+  password: string;
+  email: string;
+}
+
+const RegistrationForm: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    if (name === 'username') setUsername(value);
+    else if (name === 'password') setPassword(value);
+    else if (name === 'email') setEmail(value);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    const formData: FormData = {
+      username,
+      password,
+      email,
+    };
+
     try {
-      // Отправка данных на бэкенд Django
       const response = await fetch('http://localhost:8000/api/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
-      // Обработка ответа от бэкенда
+      });
+
       if (response.ok) {
-        console.log('Регистрация прошла успешно!')
+        console.log('Регистрация прошла успешно!');
         // Дополнительные действия при успешной регистрации
       } else {
-        console.error('Ошибка при регистрации')
+        console.error('Ошибка при регистрации');
         // Дополнительные действия при ошибке регистрации
       }
     } catch (error) {
-      console.error('Ошибка при отправке данных на бэкенд', error)
+      console.error('Ошибка при отправке данных на бэкенд', error);
     }
-  }
+  };
+
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
       <label>
@@ -77,6 +82,8 @@ const RegistrationForm = () => {
       <br />
       <button type="submit">Зарегистрироваться</button>
     </form>
-  )
-}
-export default RegistrationForm
+  );
+};
+
+export default RegistrationForm;
+

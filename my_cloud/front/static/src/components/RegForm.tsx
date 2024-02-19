@@ -28,8 +28,9 @@ const RegistrationForm: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/register/', {
+      const response = await fetch('/api/register/', {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },

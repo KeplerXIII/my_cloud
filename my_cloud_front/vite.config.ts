@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+
   build: {
-    outDir:'../my_cloud_back/front/static',
+    rollupOptions: {
+      output: {
+        assetFileNames: '[name].[ext]',
+        chunkFileNames: '[name].js',
+        entryFileNames: '[name].js',
+      },
+    },
+    outDir: '../my_cloud_back/front/static',
   },
 });

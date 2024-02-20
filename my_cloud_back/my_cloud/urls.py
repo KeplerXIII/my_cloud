@@ -22,6 +22,8 @@ from users.views import userResponse
 
 urlpatterns = [
     path("", views.index),
+    path("my_files/", views.index),
+    path("registration/", views.index),
     path("admin/", admin.site.urls),
     path('api/register/', userResponse, name='user-create'),
 ]

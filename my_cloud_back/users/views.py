@@ -12,5 +12,5 @@ class UserCreateView(generics.CreateAPIView):
 
 @csrf_exempt
 def userResponse(request):
-    print(request)
+    print(request.POST)
     return JsonResponse({"name": "test"})

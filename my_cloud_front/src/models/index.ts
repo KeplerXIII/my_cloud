@@ -20,3 +20,9 @@ export type DetailedUser = {
     isLoading: boolean
     hasError: Error | null
   }
+
+  export interface FormData {
+    username: string;
+    password: string;
+    email: string;
+  }

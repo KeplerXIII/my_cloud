@@ -1,10 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { FormData } from '../models'
 
-interface FormData {
-  username: string;
-  password: string;
-  email: string;
-}
 
 const RegistrationForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');

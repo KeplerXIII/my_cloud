@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from front import views
-from users.views import userResponse
+from users.views import userLogOut, userLogin, userReg
 
 
 urlpatterns = [
@@ -25,5 +25,7 @@ urlpatterns = [
     path("my_files/", views.index),
     path("registration/", views.index),
     path("admin/", admin.site.urls),
-    path('api/register/', userResponse, name='user-create'),
+    path('api/register/', userReg, name='user-create'),
+    path('api/login/', userLogin, name='user-login'),
+    path('api/logout/', userLogOut, name='user-logOut'),
 ]

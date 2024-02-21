@@ -63,7 +63,6 @@ export const Registration = () => {
                               </div>
                               <div>
                                 <h1 className="article__title">Регистрация</h1>
-                                <p className="article__paragraph">Форма регистрации:</p>
                                 <RegistrationForm setLoggedIn={setLoggedIn} setUsername={setUsername}/>
                               </div>
                             </>

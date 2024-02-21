@@ -18,14 +18,14 @@ const AuthBlock = () => {
             'Content-Type': 'application/json',
           },
         });
-        const responseData = await response.json()
-        console.log(responseData.login)
+        // const responseData = await response.json()
+        // console.log(responseData.login)
         if (response.ok) {
           console.log('Сессия авторизована!');
           setLoggedIn(true);
           // Дополнительные действия при успешной регистрации
         } else {
-          console.error('Ошибка при входе');
+          console.error('Сессия не авторизована');
           // Дополнительные действия при ошибке регистрации
         }
       } catch (error) {

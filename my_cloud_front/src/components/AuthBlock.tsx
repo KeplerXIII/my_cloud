@@ -7,10 +7,34 @@ const AuthBlock = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search)
-    const needLogin = searchParams.get('needLogin');
-    if (needLogin) setLoggedIn(true)
-    console.log('useeffect done')
+    // const searchParams = new URLSearchParams(window.location.search)
+    // const needLogin = searchParams.get('needLogin');
+    // if (needLogin) setLoggedIn(true)
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/islogin/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const responseData = await response.json()
+        console.log(responseData.login)
+        if (response.ok) {
+          console.log('Сессия авторизована!');
+          setLoggedIn(true);
+          // Дополнительные действия при успешной регистрации
+        } else {
+          console.error('Ошибка при входе');
+          // Дополнительные действия при ошибке регистрации
+        }
+      } catch (error) {
+        console.error('Ошибка при отправке данных на бэкенд', error);
+      }
+      console.log('useEffect done');
+    };
+  
+    fetchData();
   }, [])
 
   const handleLogOut  = async (): Promise<void> => {

@@ -6,6 +6,7 @@ from .serializers import UserSerializer
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 class UserCreateView(generics.CreateAPIView):
@@ -37,6 +38,7 @@ def userReg(request):
 @csrf_exempt
 def userLogOut(request):
     logout(request)
+    print(request.user)
     return HttpResponse(json.dumps({'logout': 'true'}), content_type='application/json')
 
 @csrf_exempt
@@ -47,6 +49,13 @@ def userLogin(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
+        print(request.user)
         return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'error': 'Пароль или логин неверные.'}), content_type='application/json')
+    
+@csrf_exempt
+@login_required
+def userIsLogin(request):
+    print('залогинены')
+    return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')

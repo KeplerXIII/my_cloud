@@ -1,15 +1,15 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { FormData } from '../models'
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormData, authBlockProps } from '../models'
 
 
-const RegistrationForm: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
+const RegistrationForm = ({ setLoggedIn, setUsername } : authBlockProps) => {
+  const [username, setCurrentUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    if (name === 'username') setUsername(value);
+    if (name === 'username') setCurrentUsername(value);
     else if (name === 'password') setPassword(value);
     else if (name === 'email') setEmail(value);
   };
@@ -34,6 +34,9 @@ const RegistrationForm: React.FC = () => {
       });
 
       if (response.ok) {
+        const data = await response.json()
+        setLoggedIn(true)
+        setUsername(data.username)
         console.log('Регистрация прошла успешно!');
         // Дополнительные действия при успешной регистрации
       } else {

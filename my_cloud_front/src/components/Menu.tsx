@@ -13,7 +13,7 @@ export const Menu = () => {
         Мои файлы
       </NavLink>
       <NavLink className={menuItemClassName} to="/registration">
-        Регистрация
+        Профиль
       </NavLink>
     </nav>
   )

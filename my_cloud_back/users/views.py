@@ -33,7 +33,10 @@ def userReg(request):
     except IntegrityError:
         return HttpResponseBadRequest(json.dumps({'error': 'Пользователь существует.'}), content_type='application/json')
 
-    return JsonResponse({'name': user.username, 'email': user.email})
+    user = authenticate(request, username=username, password=password)
+    login(request, user)
+
+    return JsonResponse({'username': user.username, 'email': user.email})
 
 @csrf_exempt
 def userLogOut(request):
@@ -49,16 +52,14 @@ def userLogin(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        print(request.user)
-        return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')
+        return HttpResponse(json.dumps({'login': 'true', 'username': request.user.username}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'error': 'Пароль или логин неверные.'}), content_type='application/json')
 
 @csrf_exempt
 # @login_required
 def userIsLogin(request):
-    print(f'Сессия авторизована под пользователем:  {request.user}')
     if request.user.is_authenticated:
-        return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')
+        return HttpResponse(json.dumps({'login': 'true', 'username': request.user.username}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'login': 'false'}), content_type='application/json')

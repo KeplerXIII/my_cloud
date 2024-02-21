@@ -26,3 +26,8 @@ export type DetailedUser = {
     password: string;
     email: string;
   }
+
+  export interface authBlockProps {
+    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
+    setUsername: React.Dispatch<React.SetStateAction<string>>,
+  }

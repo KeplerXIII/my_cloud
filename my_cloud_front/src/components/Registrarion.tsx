@@ -4,6 +4,8 @@ import RegistrationForm from './RegForm'
 
 export const Registration = () => {
   const [loggedIn, setLoggedIn] = useState(false)
+  const [username, setUsername] = useState('')
+  const [checkData, setCheckData] = useState(false)
 
   const handleLogOut  = async (): Promise<void> => {
     const response = await fetch('/api/logout/', {
@@ -33,6 +35,8 @@ export const Registration = () => {
           },
         });
         if (response.ok) {
+          const data = await response.json()
+          setUsername(data.username)
           console.log('Сессия авторизована!');
           setLoggedIn(true);
         } else {
@@ -42,26 +46,28 @@ export const Registration = () => {
         console.error('Ошибка при отправке данных на бэкенд', error);
       }
       console.log('useEffect done');
+      setCheckData(true)
     };
   
     fetchData();
   }, [])
 
+  if (!checkData) return  <article className="articleForm">Loading...</article>
   return  <article className="articleForm">
              {!loggedIn ? ( <>
                             <div>
                                 <h1 className="article__title">Вход</h1>
-                                <AuthBlock setLoggedIn={setLoggedIn}/>
+                                <AuthBlock setLoggedIn={setLoggedIn} setUsername={setUsername}/>
                               </div>
                               <div className='divider'>
                               </div>
                               <div>
                                 <h1 className="article__title">Регистрация</h1>
                                 <p className="article__paragraph">Форма регистрации:</p>
-                                <RegistrationForm />
+                                <RegistrationForm setLoggedIn={setLoggedIn} setUsername={setUsername}/>
                               </div>
                             </>
-              ) : (<><p className="formText">Вы успешно авторизованы!</p><button type="submit" onClick={handleLogOut}>Выйти</button></>)}
+              ) : (<><p className="formText">{username}, вы успешно авторизованы!</p><button type="submit" onClick={handleLogOut}>Выйти</button></>)}
           </article>
 
 }

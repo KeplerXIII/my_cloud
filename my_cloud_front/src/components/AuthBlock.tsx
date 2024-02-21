@@ -1,12 +1,9 @@
 import { useState } from 'react'
-import { FormData } from '../models'
+import { FormData, authBlockProps } from '../models'
 
-interface authBlockProps {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-const AuthBlock = ({ setLoggedIn }: authBlockProps) => {
-  const [username, setUsername] = useState('')
+const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
+  const [username, setCurrentUsername] = useState('')
   const [password, setPassword] = useState('')
 
 
@@ -32,7 +29,8 @@ const AuthBlock = ({ setLoggedIn }: authBlockProps) => {
       if (response.ok) {
         console.log('Вход успешен!');
         setLoggedIn(true)
-        // Дополнительные действия при успешной регистрации
+        const data = await response.json()
+        setUsername(data.username)
       } else {
         console.error('Ошибка при входе');
         // Дополнительные действия при ошибке регистрации
@@ -53,7 +51,7 @@ const AuthBlock = ({ setLoggedIn }: authBlockProps) => {
             <input
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setCurrentUsername(e.target.value)}
             />
           </label>
           <br />

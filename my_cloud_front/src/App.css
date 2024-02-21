@@ -64,3 +64,21 @@ input {
 button {
   padding: 10px; /* Отступы кнопки */
 }
+
+formText {
+  color: #9292a6;
+}
+
+.articleForm {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 35px;
+  
+}
+
+.divider {
+  height: 200px;
+  width: 2px;
+  background-color: #260f26;
+}

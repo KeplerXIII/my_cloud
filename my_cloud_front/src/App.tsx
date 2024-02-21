@@ -6,12 +6,10 @@ import { Registration } from './components/Registrarion'
 import { Menu } from './components/Menu'
 
 import './App.css'
-import AuthBlock from './components/AuthBlock'
 
 function App() {
   return (
     <div>
-      <AuthBlock />
       <Menu />
       <div className='page'>
         <Routes>

@@ -53,10 +53,11 @@ def userLogin(request):
         return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'error': 'Пароль или логин неверные.'}), content_type='application/json')
-    
+
 @csrf_exempt
 # @login_required
 def userIsLogin(request):
+    print(f'Сессия авторизована под пользователем:  {request.user}')
     if request.user.is_authenticated:
         return HttpResponse(json.dumps({'login': 'true'}), content_type='application/json')
     else:

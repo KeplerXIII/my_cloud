@@ -7,7 +7,7 @@ export const Registration = () => {
   const [username, setUsername] = useState('')
   const [checkData, setCheckData] = useState(false)
 
-  const handleLogOut  = async (): Promise<void> => {
+  const handleLogOut = async (): Promise<void> => {
     const response = await fetch('/api/logout/', {
       method: 'GET',
       mode: 'no-cors',
@@ -16,11 +16,11 @@ export const Registration = () => {
       },
     })
     if (response.ok) {
-      console.log('Вышли!');
+      console.log('Вышли!')
       setLoggedIn(false)
       // Дополнительные действия при успешной регистрации
     } else {
-      console.error('Ошибка при регистрации');
+      console.error('Ошибка при регистрации')
       // Дополнительные действия при ошибке регистрации
     }
   }
@@ -33,40 +33,51 @@ export const Registration = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-        });
+        })
         if (response.ok) {
           const data = await response.json()
           setUsername(data.username)
-          console.log('Сессия авторизована!');
-          setLoggedIn(true);
+          console.log('Сессия авторизована!')
+          setLoggedIn(true)
         } else {
-          console.error('Сессия не авторизована');
+          console.error('Сессия не авторизована')
         }
       } catch (error) {
-        console.error('Ошибка при отправке данных на бэкенд', error);
+        console.error('Ошибка при отправке данных на бэкенд', error)
       }
-      console.log('useEffect done');
+      console.log('useEffect done')
       setCheckData(true)
-    };
-  
-    fetchData();
+    }
+
+    fetchData()
   }, [])
 
-  if (!checkData) return  <article className="articleForm">Loading...</article>
-  return  <article className="articleForm">
-             {!loggedIn ? ( <>
-                            <div>
-                                <h1 className="article__title">Вход</h1>
-                                <AuthBlock setLoggedIn={setLoggedIn} setUsername={setUsername}/>
-                              </div>
-                              <div className='divider'>
-                              </div>
-                              <div>
-                                <h1 className="article__title">Регистрация</h1>
-                                <RegistrationForm setLoggedIn={setLoggedIn} setUsername={setUsername}/>
-                              </div>
-                            </>
-              ) : (<><p className="formText">{username}, вы успешно авторизованы!</p><button type="submit" onClick={handleLogOut}>Выйти</button></>)}
-          </article>
-
+  if (!checkData) return <article className="articleForm">Loading...</article>
+  return (
+    <article className="articleForm">
+      {!loggedIn ? (
+        <>
+          <div>
+            <h1 className="article__title">Вход</h1>
+            <AuthBlock setLoggedIn={setLoggedIn} setUsername={setUsername} />
+          </div>
+          <div className="divider"></div>
+          <div>
+            <h1 className="article__title">Регистрация</h1>
+            <RegistrationForm
+              setLoggedIn={setLoggedIn}
+              setUsername={setUsername}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="formText">{username}, вы успешно авторизованы!</p>
+          <button type="submit" onClick={handleLogOut}>
+            Выйти
+          </button>
+        </>
+      )}
+    </article>
+  )
 }

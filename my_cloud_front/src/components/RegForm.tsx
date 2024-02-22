@@ -1,27 +1,26 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { FormData, authBlockProps } from '../models'
 
-
-const RegistrationForm = ({ setLoggedIn, setUsername } : authBlockProps) => {
-  const [username, setCurrentUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
+  const [username, setCurrentUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    if (name === 'username') setCurrentUsername(value);
-    else if (name === 'password') setPassword(value);
-    else if (name === 'email') setEmail(value);
-  };
+    const { name, value } = e.target
+    if (name === 'username') setCurrentUsername(value)
+    else if (name === 'password') setPassword(value)
+    else if (name === 'email') setEmail(value)
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
+    e.preventDefault()
 
     const formData: FormData = {
       username,
       password,
       email,
-    };
+    }
 
     try {
       const response = await fetch('/api/register/', {
@@ -31,22 +30,20 @@ const RegistrationForm = ({ setLoggedIn, setUsername } : authBlockProps) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
       if (response.ok) {
         const data = await response.json()
         setLoggedIn(true)
         setUsername(data.username)
-        console.log('Регистрация прошла успешно!');
-        // Дополнительные действия при успешной регистрации
+        console.log('Регистрация прошла успешно!')
       } else {
-        console.error('Ошибка при регистрации');
-        // Дополнительные действия при ошибке регистрации
+        console.error('Ошибка при регистрации')
       }
     } catch (error) {
-      console.error('Ошибка при отправке данных на бэкенд', error);
+      console.error('Ошибка при отправке данных на бэкенд', error)
     }
-  };
+  }
 
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
@@ -82,8 +79,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername } : authBlockProps) => {
       <br />
       <button type="submit">Зарегистрироваться</button>
     </form>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
-
+export default RegistrationForm

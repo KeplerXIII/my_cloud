@@ -30,5 +30,5 @@ urlpatterns = [
     path('api/login/', userLogin, name='user-login'),
     path('api/logout/', userLogOut, name='user-logOut'),
     path('api/islogin/', userIsLogin, name='user-logOut'),
-    path('api/files/add', add_file, name='add-file')
+    path('api/files/add/', add_file, name='add-file')
 ]

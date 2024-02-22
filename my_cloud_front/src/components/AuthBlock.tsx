@@ -4,12 +4,13 @@ import { FormData, authBlockProps } from '../models'
 const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
   const [username, setCurrentUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [authErr, setAuthErr] = useState('')
 
   const handleLogin = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ): Promise<void> => {
     e.preventDefault()
-
+    setAuthErr('')
     const formData: FormData = {
       username,
       password,
@@ -32,13 +33,13 @@ const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
         const data = await response.json()
         setUsername(data.username)
       } else {
-        console.error('Ошибка при входе')
+        setAuthErr('Неверный логин или пароль')
+        // console.error('Ошибка при входе')
         // Дополнительные действия при ошибке регистрации
       }
     } catch (error) {
       console.error('Ошибка при отправке данных на бэкенд', error)
     }
-
     // Здесь вы можете добавить логику проверки логина и пароля
     // В данном примере просто устанавливаем состояние "loggedIn" в true, чтобы симулировать успешную авторизацию.
   }
@@ -63,6 +64,13 @@ const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
+        {authErr ? (
+          <>
+            <p className="formText">{authErr}</p>
+          </>
+        ) : (
+          <></>
+        )}
         <br />
         <button type="button" onClick={handleLogin}>
           Войти

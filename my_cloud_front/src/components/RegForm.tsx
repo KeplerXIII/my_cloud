@@ -5,6 +5,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
   const [username, setCurrentUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [email, setEmail] = useState<string>('')
+  const [regErr, setRegErr] = useState('')
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
@@ -15,7 +16,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-
+    setRegErr('')
     const formData: FormData = {
       username,
       password,
@@ -39,6 +40,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
         console.log('Регистрация прошла успешно!')
       } else {
         console.error('Ошибка при регистрации')
+        setRegErr('Данные уже существуют в базе или введены некорректно')
       }
     } catch (error) {
       console.error('Ошибка при отправке данных на бэкенд', error)
@@ -76,6 +78,13 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
           onChange={handleInputChange}
         />
       </label>
+      {regErr ? (
+        <>
+          <p className="formText">{regErr}</p>
+        </>
+      ) : (
+        <></>
+      )}
       <br />
       <button type="submit">Зарегистрироваться</button>
     </form>

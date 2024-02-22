@@ -17,6 +17,18 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setRegErr('')
+    if (username === '') {
+      setCurrentUsername('Укажите имя пользователя')
+      return
+    }
+    if (email === '') {
+      setEmail('Укажите email')
+      return
+    }
+    if (password === '') {
+      setCurrentUsername('Укажите Пароль')
+      return
+    }
     const formData: FormData = {
       username,
       password,
@@ -40,7 +52,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
         console.log('Регистрация прошла успешно!')
       } else {
         console.error('Ошибка при регистрации')
-        setRegErr('Данные уже существуют в базе или введены некорректно')
+        setRegErr('Пользователь уже зарегистрирован.')
       }
     } catch (error) {
       console.error('Ошибка при отправке данных на бэкенд', error)

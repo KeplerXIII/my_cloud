@@ -84,3 +84,14 @@ button {
   width: 2px;
   background-color: #260f26;
 }
+
+
+.fileInputBlock {
+  display: grid;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.fileInput {
+  color: aliceblue;
+}

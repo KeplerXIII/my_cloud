@@ -2,6 +2,7 @@ import json
 from django.db import IntegrityError
 from rest_framework import generics
 from django.contrib.auth.models import User
+
 from .serializers import UserSerializer
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt

@@ -13,15 +13,18 @@ def add_file(request):
 
         if uploaded_file:
 
+            print(uploaded_file)
             file_instance = UploadedFile(
                 user=request.user, 
                 file=uploaded_file, 
-                original_name='test')
-            file_instance.save()    
+                original_name=uploaded_file,
+                size=uploaded_file.size)
 
+            file_instance.save()
 
             return JsonResponse({'message': 'Файл успешно загружен'})
         else:
             return HttpResponseBadRequest(json.dumps({'message': 'Ошибка при загрузке файла'}), content_type='application/json')
 
-    return HttpResponseBadRequest(json.dumps({'message': 'Метод не поддерживается'}), content_type='application/json')
+    return HttpResponseBadRequest(json.dumps({'message': 'Необходима авторизация'}), content_type='application/json')
+

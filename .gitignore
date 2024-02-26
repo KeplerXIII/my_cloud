@@ -68,3 +68,5 @@ pyproject.toml
 
 # Storage
 uploads/
+my_cloud_back/filestorage/migrations/
+my_cloud_back/filestorage/migrations/

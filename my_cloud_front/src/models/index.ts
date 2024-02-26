@@ -31,3 +31,7 @@ export type DetailedUser = {
     setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
     setUsername: React.Dispatch<React.SetStateAction<string>>,
   }
+
+  export type userID = {
+    userID: string
+  }

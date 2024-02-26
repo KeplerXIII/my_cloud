@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import FileUpload from './FileUpload'
+import { FileViewer } from './FileViewer'
 
 export const MyFiles = () => {
   const [userID, setUserID] = useState('')
@@ -16,7 +17,6 @@ export const MyFiles = () => {
         })
         if (response.ok) {
           const data = await response.json()
-          console.log(data.id)
           setUserID(data.id)
           console.log(userID)
           setLoggedIn(true)
@@ -39,6 +39,7 @@ export const MyFiles = () => {
           <h1 className="article__title">Загрузка файлов</h1>
           <FileUpload />
           <h1 className="article__title">Ваши файлы</h1>
+          <FileViewer userID={userID} />
         </>
       ) : (
         <p className="formText">Необходимо залогиниться.</p>

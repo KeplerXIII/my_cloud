@@ -60,6 +60,6 @@ def userLogin(request):
 # @login_required
 def userIsLogin(request):
     if request.user.is_authenticated:
-        return HttpResponse(json.dumps({'login': 'true', 'username': request.user.username}), content_type='application/json')
+        return HttpResponse(json.dumps({'login': 'true', 'username': request.user.username, 'id': request.user.id}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'login': 'false'}), content_type='application/json')

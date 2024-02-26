@@ -70,3 +70,4 @@ pyproject.toml
 uploads/
 my_cloud_back/filestorage/migrations/
 my_cloud_back/filestorage/migrations/
+my_cloud_back/front/static/index.js

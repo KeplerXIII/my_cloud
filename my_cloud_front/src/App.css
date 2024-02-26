@@ -108,3 +108,38 @@ button {
 .fileItem:hover {
   background-color: hsl(0, 22%, 30%); 
 }
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  border: 2px solid #3498db; /* Цвет рамки */
+  padding: 10px;
+  margin-bottom: 10px;
+  list-style-type: none; /* Убирает маркеры списка */
+}
+
+.actionButton {
+  align-items: flex-end;
+  font-size: 1px; /* Размер кнопок */
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+}
+
+.deleteButton {
+  color: #e74c3c; /* Красный цвет для удаления */
+}
+
+.downloadButton {
+  margin-left: auto;
+  color: #2ecc71; /* Зеленый цвет для скачивания */
+}
+
+.shareButton {
+  color: #3498db; /* Синий цвет для поделиться */
+}
+
+.actionButton:hover {
+  background-color: #f2f2f2; /* Цвет фона при наведении */
+}

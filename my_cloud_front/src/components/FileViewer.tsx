@@ -15,7 +15,7 @@ export const FileViewer = ({
     <div>
       <ul>
         {currentData.map((file) => (
-          <li key={file.original_name}>
+          <li key={file.original_name} className="fileItem">
             <strong>Оригинальное имя:</strong> {file.original_name},{' '}
             <strong>Размер:</strong> {file.size},{' '}
             <strong>Дата загрузки:</strong> {file.upload_date}
@@ -23,5 +23,5 @@ export const FileViewer = ({
         ))}
       </ul>
     </div>
-  )
+  )l
 }

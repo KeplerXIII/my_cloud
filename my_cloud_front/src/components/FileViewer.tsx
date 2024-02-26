@@ -23,5 +23,5 @@ export const FileViewer = ({
         ))}
       </ul>
     </div>
-  )l
+  )
 }

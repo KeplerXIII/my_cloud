@@ -1,32 +1,15 @@
-import { useEffect, useState } from 'react'
-import { FileData, userID } from '../models'
+import { useEffect } from 'react'
+import { FileViewerType } from '../models'
+import { fetchFiles } from '../hooks/fetchFiles'
 
-export const FileViewer = ({ userID }: userID) => {
-  const [currentData, setData] = useState<FileData[]>([])
-
+export const FileViewer = ({
+  userID,
+  currentData,
+  setData,
+}: FileViewerType) => {
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/files/${userID}/`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        if (response.ok) {
-          const data = await response.json()
-          setData(data.files)
-          console.log(currentData)
-        } else {
-          console.error('Не удаётся загрузить список файлов.')
-        }
-      } catch (error) {
-        console.error('Ошибка при отправке данных на бэкенд', error)
-      }
-      console.log('useEffect done')
-    }
-    fetchData()
-  }, [])
+    fetchFiles(userID, setData)
+  }, [userID])
 
   return (
     <div>

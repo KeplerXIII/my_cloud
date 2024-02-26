@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export type DetailedUser = {
   id: number
   name: string
@@ -32,12 +34,16 @@ export interface authBlockProps {
   setUsername: React.Dispatch<React.SetStateAction<string>>
 }
 
-export type userID = {
-  userID: string
-}
-
 export type FileData = {
   original_name: string
   size: number
   upload_date: string
+
+}
+
+export type FileViewerType = {
+  userID: string,
+  currentData: FileData[],
+  setData: Dispatch<SetStateAction<FileData[]>>
+
 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { fetchFiles } from '../hooks/fetchFiles'
+import { FileViewerType } from '../models'
 
-export const FileUpload: React.FC = () => {
+export const FileUpload = ({ userID, setData }: FileViewerType) => {
   const [file, setFile] = useState<File | null>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +29,7 @@ export const FileUpload: React.FC = () => {
 
       if (response.ok) {
         alert('Файл успешно загружен')
+        fetchFiles(userID, setData)
       } else {
         alert('Ошибка при загрузке файла')
       }

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import FileUpload from './FileUpload'
 import { FileViewer } from './FileViewer'
+import { FileData } from '../models'
 
 export const MyFiles = () => {
   const [userID, setUserID] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
+  const [currentData, setData] = useState<FileData[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,9 +39,17 @@ export const MyFiles = () => {
       {loggedIn ? (
         <>
           <h1 className="article__title">Загрузка файлов</h1>
-          <FileUpload />
+          <FileUpload
+            userID={userID}
+            currentData={currentData}
+            setData={setData}
+          />
           <h1 className="article__title">Ваши файлы</h1>
-          <FileViewer userID={userID} />
+          <FileViewer
+            userID={userID}
+            currentData={currentData}
+            setData={setData}
+          />
         </>
       ) : (
         <p className="formText">Необходимо залогиниться.</p>

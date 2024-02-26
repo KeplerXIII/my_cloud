@@ -30,7 +30,7 @@ export const MyFiles = () => {
     }
 
     fetchData()
-  })
+  }, [loggedIn, userID])
 
   return (
     <article className="article">

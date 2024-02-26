@@ -31,9 +31,11 @@ def add_file(request):
 
     return HttpResponseBadRequest(json.dumps({'message': 'Необходима авторизация'}), content_type='application/json')
 
-@user_passes_test(lambda u: u.is_staff)
+
 def get_files(request, user_id):
-    # Проверяем, является ли пользователь администратором
+    # Проверяем, является ли пользователь администраторомl
+    print(user_id)
+
     if not request.user.is_staff:
         # Если не администратор, убеждаемся, что запрос идет от владельца учетной записи
         if request.user.id != user_id:

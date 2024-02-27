@@ -23,6 +23,7 @@ export type FileData = {
   original_name: string
   size: number
   upload_date: string
+  download_date: string
 }
 
 export type FileViewerType = {

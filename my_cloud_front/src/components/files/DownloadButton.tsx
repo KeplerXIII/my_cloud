@@ -1,6 +1,7 @@
 import { FileButtonType } from '../../models'
+import { fetchFiles } from './fetchFiles'
 
-export const FileDownloadButton = ({ fileID }: FileButtonType) => {
+export const FileDownloadButton = ({ fileID, userID, setData }: FileButtonType) => {
   const handleDownload = async () => {
     try {
       const response = await fetch(`/api/files/download_file/${fileID}/`, {
@@ -38,6 +39,7 @@ export const FileDownloadButton = ({ fileID }: FileButtonType) => {
             // Освобождаем ресурсы
             URL.revokeObjectURL(url)
             document.body.removeChild(link)
+
           } else {
             console.error(
               'Не удалось извлечь имя файла из заголовка Content-Disposition',
@@ -46,6 +48,8 @@ export const FileDownloadButton = ({ fileID }: FileButtonType) => {
         } else {
           console.error('Отсутствует заголовок Content-Disposition в ответе')
         }
+        
+        fetchFiles(userID, setData)
       } else {
         const data = await response.json()
         console.error('Ошибка при скачивании файла:', data.message)
@@ -57,7 +61,7 @@ export const FileDownloadButton = ({ fileID }: FileButtonType) => {
 
   return (
     <button className="deleteButton" onClick={handleDownload}>
-      &#8595;
+      &#128229;
     </button>
   )
 }

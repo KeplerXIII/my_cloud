@@ -1,6 +1,7 @@
 import json
 import mimetypes
 import os
+from django.utils import timezone
 from wsgiref.types import FileWrapper
 from django.http import FileResponse, HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
@@ -55,7 +56,15 @@ def get_files(request, user_id):
 
     # Создаем список данных о файлах
 
-    file_data = [{'id': file.id, 'author': file.user.username,'original_name': file.original_name, 'size': file.size, 'upload_date': file.upload_date.strftime('%Y-%m-%d %H:%M:%S %z')} for file in files]
+    file_data = [{
+        'id': file.id, 
+        'author': file.user.username,
+        'original_name': file.original_name, 
+        'size': file.size, 
+        'upload_date': file.upload_date.strftime('%Y-%m-%d %H:%M:%S %z'),
+        'download_date': file.last_download_date.strftime('%Y-%m-%d %H:%M:%S %z') if file.last_download_date else None
+        } for file in files]
+
     return JsonResponse({'files': file_data}, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt
@@ -94,6 +103,10 @@ def download_file(request, file_id):
         file_path = file_instance.file.path
 
         mime_type, _ = mimetypes.guess_type(file_path)
+
+        # Обновление последней даты скачивания
+        file_instance.last_download_date = timezone.now()
+        file_instance.save()
 
         response = FileResponse(open(file_path, 'rb'), content_type=mime_type)
         response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'

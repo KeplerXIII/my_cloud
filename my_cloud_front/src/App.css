@@ -110,6 +110,7 @@ button {
 }
 
 .fileItem {
+  justify-content: space-around;
   display: flex;
   align-items: center;
   border: 2px solid #3498db; /* Цвет рамки */
@@ -142,4 +143,8 @@ button {
 
 .actionButton:hover {
   background-color: #f2f2f2; /* Цвет фона при наведении */
+}
+
+p {
+  display: table;
 }

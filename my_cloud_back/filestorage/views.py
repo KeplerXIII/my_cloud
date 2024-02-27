@@ -20,7 +20,6 @@ def add_file(request):
 
         if uploaded_file:
 
-            print(uploaded_file)
             file_instance = UploadedFile(
                 user=request.user, 
                 file=uploaded_file, 
@@ -71,7 +70,6 @@ def get_files(request, user_id):
 @login_required
 def delete_file(request, file_id):
     # Получаем экземпляр файла из базы данных
-    print('попадаем сюда?')
     file_instance = get_object_or_404(UploadedFile, id=file_id)
 
     # Проверяем, есть ли у пользователя права на удаление файла

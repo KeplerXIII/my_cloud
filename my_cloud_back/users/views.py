@@ -42,7 +42,6 @@ def userReg(request):
 @csrf_exempt
 def userLogOut(request):
     logout(request)
-    print(request.user)
     return HttpResponse(json.dumps({'logout': 'true'}), content_type='application/json')
 
 @csrf_exempt

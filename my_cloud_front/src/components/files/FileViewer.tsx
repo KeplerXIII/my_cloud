@@ -14,28 +14,43 @@ export const FileViewer = ({
     fetchFiles(userID, setData)
   }, [userID])
 
-  console.log(currentData)
   return (
     <div>
-      <ul>
+      <ul className="fileList">
         {currentData.map((file) => (
           <li key={file.id} className="fileItem">
-            <p>
-              Автор: {file.author} Имя файла: {file.original_name} Размер:{' '}
-              {(file.size / (1024 * 1024)).toFixed(2)} Mb Загружено:{' '}
-              {dataConverter(file.upload_date)} Последнее скачивание: {dataConverter(file.download_date)}
-            </p>
-            <FileDownloadButton
-              fileID={file.id}
-              userID={userID}
-              setData={setData}
-            />{' '}
-            <FileDeleteButton
-              fileID={file.id}
-              userID={userID}
-              setData={setData}
-            />{' '}
-            <button className="shareButton">&#128279;</button>{' '}
+            <div className="fileDetails">
+              <p>
+                <strong>Автор:</strong> {file.author}
+              </p>
+              <p>
+                <strong>Имя файла:</strong> {file.original_name}
+              </p>
+              <p>
+                <strong>Размер:</strong>{' '}
+                {(file.size / (1024 * 1024)).toFixed(2)} Mb
+              </p>
+              <p>
+                <strong>Загружено:</strong> {dataConverter(file.upload_date)}
+              </p>
+              <p>
+                <strong>Последнее скачивание:</strong>{' '}
+                {dataConverter(file.download_date)}
+              </p>
+            </div>
+            <div className="fileActions">
+              <FileDownloadButton
+                fileID={file.id}
+                userID={userID}
+                setData={setData}
+              />
+              <FileDeleteButton
+                fileID={file.id}
+                userID={userID}
+                setData={setData}
+              />
+              <button className="shareButton">&#128279;</button>
+            </div>
           </li>
         ))}
       </ul>

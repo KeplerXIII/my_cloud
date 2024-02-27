@@ -1,5 +1,5 @@
-import { FileButtonType } from '../../models'
-import { fetchFiles } from './fetchFiles'
+import { FileButtonType } from '../../../models'
+import { fetchFiles } from '../fetchFiles'
 
 export const FileDownloadButton = ({ fileID, userID, setData }: FileButtonType) => {
   const handleDownload = async () => {

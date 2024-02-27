@@ -24,6 +24,7 @@ export type FileData = {
   size: number
   upload_date: string
   download_date: string
+  special_link: string
 }
 
 export type FileViewerType = {

@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { FileViewerType } from '../../models'
 import { fetchFiles } from './fetchFiles'
 import { dataConverter } from './dateConverter'
-import { FileDeleteButton } from './DeleteButton'
-import { FileDownloadButton } from './DownloadButton'
-import { FileShareButton } from './ShareButton'
+import { FileDeleteButton } from './buttons/DeleteButton'
+import { FileDownloadButton } from './buttons/DownloadButton'
+import { FileShareButton } from './buttons/ShareButton'
 
 export const FileViewer = ({
   userID,
@@ -37,6 +37,18 @@ export const FileViewer = ({
               <p>
                 <strong>Последнее скачивание:</strong>{' '}
                 {dataConverter(file.download_date)}
+              </p>
+              <p>
+                {file.special_link ? (
+                  <p>
+                    <strong>Одноразовая ссылка:</strong>
+                    {file.special_link}{' '}
+                  </p>
+                ) : (
+                  <p>
+                    <strong>Одноразовая ссылка:</strong>отсутствует{' '}
+                  </p>
+                )}
               </p>
             </div>
             <div className="fileActions">

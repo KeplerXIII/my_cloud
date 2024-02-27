@@ -14,8 +14,11 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 
 from filestorage.models import UploadedFile
+
 load_dotenv()
 
+host = os.getenv('HOST')
+port = os.getenv('PORT')
 
 @csrf_exempt
 # @login_required
@@ -43,7 +46,6 @@ def add_file(request):
 
 def get_files(request, user_id):
     # Проверяем, является ли пользователь администраторомl
-
     if not request.user.is_staff:
         # Если не администратор, убеждаемся, что запрос идет от владельца учетной записи
         if request.user.id != user_id:
@@ -59,6 +61,7 @@ def get_files(request, user_id):
         files = UploadedFile.objects.filter(user=user).order_by('id')
 
     # Создаем список данных о файлах
+    server_address = f'{host}:{port}'  # Замените на реальный адрес вашего сервера
 
     file_data = [{
         'id': file.id, 
@@ -66,9 +69,11 @@ def get_files(request, user_id):
         'original_name': file.original_name, 
         'size': file.size, 
         'upload_date': file.upload_date.strftime('%Y-%m-%d %H:%M:%S %z'),
-        'download_date': file.last_download_date.strftime('%Y-%m-%d %H:%M:%S %z') if file.last_download_date else None
+        'download_date': file.last_download_date.strftime('%Y-%m-%d %H:%M:%S %z') if file.last_download_date else None,
+        'special_link': f"{server_address}/share/{file.special_link}" if file.special_link else None
         } for file in files]
 
+    print(file_data)
     return JsonResponse({'files': file_data}, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt

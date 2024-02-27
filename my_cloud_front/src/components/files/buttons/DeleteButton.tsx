@@ -1,5 +1,5 @@
-import { FileButtonType } from '../../models'
-import { fetchFiles } from './fetchFiles'
+import { FileButtonType } from '../../../models'
+import { fetchFiles } from '../fetchFiles'
 
 export const FileDeleteButton = ({
   fileID,

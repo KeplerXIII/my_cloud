@@ -1,6 +1,7 @@
-import { FileButtonType } from '../../models'
+import { FileButtonType } from '../../../models'
+import { fetchFiles } from '../fetchFiles'
 
-export const FileShareButton = ({ fileID }: FileButtonType) => {
+export const FileShareButton = ({ fileID, userID, setData }: FileButtonType) => {
   const handleShare = async () => {
     try {
       const response = await fetch(
@@ -16,6 +17,7 @@ export const FileShareButton = ({ fileID }: FileButtonType) => {
       if (response.ok) {
         const data = await response.json()
         await navigator.clipboard.writeText(data.special_link);
+        fetchFiles(userID, setData)
         alert(`Одноразовая ссылка для скачивания скопирована в буфер: ${data.special_link}`)
       } else {
         const data = await response.json()

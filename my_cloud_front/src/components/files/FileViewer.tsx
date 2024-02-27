@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { FileViewerType } from '../../models'
 import { fetchFiles } from './fetchFiles'
+import { dataConverter } from './dateConverter'
+import { FileDeleteButton } from './DeleteButton'
 
 export const FileViewer = ({
   userID,
@@ -15,16 +17,19 @@ export const FileViewer = ({
     <div>
       <ul>
         {currentData.map((file) => (
-          <li key={file.original_name} className="fileItem">
-            <strong>Имя файла:</strong> {file.original_name},{' '}
-            <strong>Размер:</strong> {file.size},{' '}
-            <strong>Дата загрузки:</strong> {file.upload_date}
+          <li key={file.id} className="fileItem">
+            <p>
+              Автор: {file.author}, Имя файла: {file.original_name}, Размер:{' '}
+              {(file.size / (1024 * 1024)).toFixed(2)} Mb, Загружено:{' '}
+              {dataConverter(file.upload_date)}
+            </p>
             <button className="downloadButton">&#8595;</button>{' '}
-            {/* Зеленая стрелка вниз - скачать */}
-            <button className="deleteButton">&#10060;</button>{' '}
-            {/* Красный крестик - удалить */}
+            <FileDeleteButton
+              fileID={file.id}
+              userID={userID}
+              setData={setData}
+            />{' '}
             <button className="shareButton">&#128279;</button>{' '}
-            {/* Значок поделиться */}
           </li>
         ))}
       </ul>

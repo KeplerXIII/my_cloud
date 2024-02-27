@@ -49,7 +49,6 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
         const data = await response.json()
         setLoggedIn(true)
         setUsername(data.username)
-        console.log('Регистрация прошла успешно!')
       } else {
         console.error('Ошибка при регистрации')
         setRegErr('Пользователь уже зарегистрирован.')

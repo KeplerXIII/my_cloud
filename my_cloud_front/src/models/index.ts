@@ -1,21 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
-
-export type DetailedUser = {
-  id: number
-  name: string
-  avatar: string
-  details: {
-    city: string
-    company: string
-    position: string
-  }
-}
-
-export type User = Pick<DetailedUser, 'id' | 'name'>
-
-export type DetailsProps = {
-  info: User
-}
+import { Dispatch, SetStateAction } from 'react'
 
 export type FetchData<T> = {
   data: T | undefined
@@ -35,15 +18,21 @@ export interface authBlockProps {
 }
 
 export type FileData = {
+  id: number
+  author: string
   original_name: string
   size: number
   upload_date: string
-
 }
 
 export type FileViewerType = {
-  userID: string,
-  currentData: FileData[],
+  userID: string
+  currentData: FileData[]
   setData: Dispatch<SetStateAction<FileData[]>>
+}
 
+export type FileDeleteType = {
+  fileID: number
+  userID: string
+  setData: Dispatch<SetStateAction<FileData[]>>
 }

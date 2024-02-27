@@ -20,7 +20,6 @@ export const MyFiles = () => {
         if (response.ok) {
           const data = await response.json()
           setUserID(data.id)
-          console.log(userID)
           setLoggedIn(true)
         } else {
           console.error('Сессия не авторизована')
@@ -28,7 +27,6 @@ export const MyFiles = () => {
       } catch (error) {
         console.error('Ошибка при отправке данных на бэкенд', error)
       }
-      console.log('useEffect done')
     }
 
     fetchData()

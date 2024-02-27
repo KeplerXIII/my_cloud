@@ -1,4 +1,5 @@
 import json
+import os
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -21,7 +22,8 @@ def add_file(request):
                 user=request.user, 
                 file=uploaded_file, 
                 original_name=uploaded_file,
-                size=uploaded_file.size)
+                size=uploaded_file.size
+                )
 
             file_instance.save()
 
@@ -34,7 +36,6 @@ def add_file(request):
 
 def get_files(request, user_id):
     # Проверяем, является ли пользователь администраторомl
-    print(user_id)
 
     if not request.user.is_staff:
         # Если не администратор, убеждаемся, что запрос идет от владельца учетной записи
@@ -51,6 +52,31 @@ def get_files(request, user_id):
         files = UploadedFile.objects.filter(user=user)
 
     # Создаем список данных о файлах
-    file_data = [{'original_name': file.original_name, 'size': file.size, 'upload_date': file.upload_date} for file in files]
 
+    file_data = [{'id': file.id, 'author': file.user.username,'original_name': file.original_name, 'size': file.size, 'upload_date': file.upload_date.strftime('%Y-%m-%d %H:%M:%S %z')} for file in files]
     return JsonResponse({'files': file_data})
+
+@csrf_exempt
+@login_required
+def delete_file(request, file_id):
+    # Получаем экземпляр файла из базы данных
+    print('попадаем сюда?')
+    file_instance = get_object_or_404(UploadedFile, id=file_id)
+
+    # Проверяем, есть ли у пользователя права на удаление файла
+    if not request.user.is_staff and file_instance.user != request.user:
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
+
+    # Получаем путь к файлу
+    file_path = file_instance.file.path
+
+    # Удаляем экземпляр файла из базы данных
+    file_instance.delete()
+
+    try:
+        # Удаляем файл из локального хранилища
+        os.remove(file_path)
+    except FileNotFoundError:
+        pass  # Обрабатываем случай, если файла не существует
+
+    return JsonResponse({'message': 'Файл успешно удален'})

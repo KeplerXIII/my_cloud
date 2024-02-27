@@ -16,12 +16,9 @@ export const Registration = () => {
       },
     })
     if (response.ok) {
-      console.log('Вышли!')
       setLoggedIn(false)
-      // Дополнительные действия при успешной регистрации
     } else {
       console.error('Ошибка при регистрации')
-      // Дополнительные действия при ошибке регистрации
     }
   }
 
@@ -37,7 +34,6 @@ export const Registration = () => {
         if (response.ok) {
           const data = await response.json()
           setUsername(data.username)
-          console.log('Сессия авторизована!')
           setLoggedIn(true)
         } else {
           console.error('Сессия не авторизована')
@@ -45,7 +41,6 @@ export const Registration = () => {
       } catch (error) {
         console.error('Ошибка при отправке данных на бэкенд', error)
       }
-      console.log('useEffect done')
       setCheckData(true)
     }
 

@@ -28,20 +28,16 @@ const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
       })
 
       if (response.ok) {
-        console.log('Вход успешен!')
         setLoggedIn(true)
         const data = await response.json()
         setUsername(data.username)
       } else {
         setAuthErr('Неверный логин или пароль')
-        // console.error('Ошибка при входе')
-        // Дополнительные действия при ошибке регистрации
+        console.error('Ошибка при входе')
       }
     } catch (error) {
       console.error('Ошибка при отправке данных на бэкенд', error)
     }
-    // Здесь вы можете добавить логику проверки логина и пароля
-    // В данном примере просто устанавливаем состояние "loggedIn" в true, чтобы симулировать успешную авторизацию.
   }
 
   return (

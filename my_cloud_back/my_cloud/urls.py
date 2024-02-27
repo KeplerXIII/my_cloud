@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from front import views
-from my_cloud_back.filestorage.views import add_file, delete_file, get_files
+from my_cloud_back.filestorage.views import add_file, delete_file, download_file, get_files
 from users.views import userIsLogin, userLogOut, userLogin, userReg
 
 
@@ -33,4 +33,5 @@ urlpatterns = [
     path('api/files/add/', add_file, name='add-file'),
     path('api/files/<int:user_id>/', get_files, name='get_files'),
     path('api/files/delete_file/<int:file_id>/', delete_file, name='delete_file'),
+    path('api/files/download_file/<int:file_id>/', download_file, name='download_file'),
 ]

@@ -31,7 +31,7 @@ export type FileViewerType = {
   setData: Dispatch<SetStateAction<FileData[]>>
 }
 
-export type FileDeleteType = {
+export type FileButtonType = {
   fileID: number
   userID: string
   setData: Dispatch<SetStateAction<FileData[]>>

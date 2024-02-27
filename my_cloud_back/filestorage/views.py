@@ -1,6 +1,8 @@
 import json
+import mimetypes
 import os
-from django.http import JsonResponse, HttpResponseBadRequest
+from wsgiref.types import FileWrapper
+from django.http import FileResponse, HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -54,7 +56,7 @@ def get_files(request, user_id):
     # Создаем список данных о файлах
 
     file_data = [{'id': file.id, 'author': file.user.username,'original_name': file.original_name, 'size': file.size, 'upload_date': file.upload_date.strftime('%Y-%m-%d %H:%M:%S %z')} for file in files]
-    return JsonResponse({'files': file_data})
+    return JsonResponse({'files': file_data}, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt
 @login_required
@@ -65,7 +67,7 @@ def delete_file(request, file_id):
 
     # Проверяем, есть ли у пользователя права на удаление файла
     if not request.user.is_staff and file_instance.user != request.user:
-        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403, json_dumps_params={'ensure_ascii': False})
 
     # Получаем путь к файлу
     file_path = file_instance.file.path
@@ -79,4 +81,25 @@ def delete_file(request, file_id):
     except FileNotFoundError:
         pass  # Обрабатываем случай, если файла не существует
 
-    return JsonResponse({'message': 'Файл успешно удален'})
+    return JsonResponse({'message': 'Файл успешно удален'}, json_dumps_params={'ensure_ascii': False})
+
+@login_required
+def download_file(request, file_id):
+    try:
+        file_instance = get_object_or_404(UploadedFile, id=file_id)
+
+        if not request.user.is_staff and file_instance.user != request.user:
+            return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403, json_dumps_params={'ensure_ascii': False})
+
+        file_path = file_instance.file.path
+
+        mime_type, _ = mimetypes.guess_type(file_path)
+
+        response = FileResponse(open(file_path, 'rb'), content_type=mime_type)
+        response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'
+        return response
+    
+    except FileNotFoundError:
+        return JsonResponse({'message': 'Файл не найден'}, status=404, json_dumps_params={'ensure_ascii': False})
+    except Exception as e:
+        return JsonResponse({'message': f'Ошибка при скачивании файла: {str(e)}', }, status=500, json_dumps_params={'ensure_ascii': False})

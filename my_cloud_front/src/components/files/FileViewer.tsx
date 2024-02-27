@@ -3,6 +3,7 @@ import { FileViewerType } from '../../models'
 import { fetchFiles } from './fetchFiles'
 import { dataConverter } from './dateConverter'
 import { FileDeleteButton } from './DeleteButton'
+import { FileDownloadButton } from './DownloadButton'
 
 export const FileViewer = ({
   userID,
@@ -23,7 +24,11 @@ export const FileViewer = ({
               {(file.size / (1024 * 1024)).toFixed(2)} Mb, Загружено:{' '}
               {dataConverter(file.upload_date)}
             </p>
-            <button className="downloadButton">&#8595;</button>{' '}
+            <FileDownloadButton
+              fileID={file.id}
+              userID={userID}
+              setData={setData}
+            />{' '}
             <FileDeleteButton
               fileID={file.id}
               userID={userID}

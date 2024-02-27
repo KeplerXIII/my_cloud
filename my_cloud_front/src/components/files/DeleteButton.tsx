@@ -1,11 +1,11 @@
-import { FileDeleteType } from '../../models'
+import { FileButtonType } from '../../models'
 import { fetchFiles } from './fetchFiles'
 
 export const FileDeleteButton = ({
   fileID,
   userID,
   setData,
-}: FileDeleteType) => {
+}: FileButtonType) => {
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/files/delete_file/${fileID}/`, {

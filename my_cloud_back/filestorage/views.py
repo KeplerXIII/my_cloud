@@ -12,13 +12,43 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from filestorage.models import UploadedFile
+from my_cloud_back.filestorage.consumer import NotificationConsumer
 
 load_dotenv()
 
 host = os.getenv('HOST')
 port = os.getenv('PORT')
+
+
+def send_message_to_group(group_name, message):
+    channel_layer = get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        group_name,
+        {
+            "type": "update.message",
+            "message": message,
+        }
+    )
+    
+    return True
+
+def send_message_to_all(message):
+    channel_layer = get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        "notification_group",  # Имя группы (может быть любым уникальным идентификатором)
+        {
+            "type": "update.message",
+            "message": message,
+        }
+    )
+
+    return True
 
 @csrf_exempt
 # @login_required
@@ -118,6 +148,10 @@ def download_file(request, file_id):
 
         response = FileResponse(open(file_path, 'rb'), content_type=mime_type)
         response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'
+
+        # Отправляем чтобы фронт перерисовался
+        send_message_to_group("notification_group", {"text": "text"})
+
         return response
     
     except FileNotFoundError:
@@ -127,6 +161,7 @@ def download_file(request, file_id):
     
 @login_required
 def generate_special_link(request, file_id):
+
     # Получаем экземпляр файла из базы данных
     file_instance = get_object_or_404(UploadedFile, id=file_id)
 
@@ -148,6 +183,10 @@ def generate_special_link(request, file_id):
     server_address = f'{host}:{port}'  # Замените на реальный адрес вашего сервера
     share_link = f"{server_address}/share/{file_instance.special_link}"
 
+    # Отправляем чтобы фронт перерисовался
+    send_message_to_group("notification_group", {"text": "text"})
+
+
     return JsonResponse({'special_link': share_link})
 
 def download_file_by_share_link(request, share_link):
@@ -166,6 +205,9 @@ def download_file_by_share_link(request, share_link):
 
         file_instance.special_link = None
         file_instance.save()
+
+        # Отправляем чтобы фронт перерисовался
+        send_message_to_all("text")
 
         return response
         

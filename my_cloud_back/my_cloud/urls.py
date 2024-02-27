@@ -15,8 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from front import views
+from my_cloud_back.filestorage.consumer import NotificationConsumer
 from my_cloud_back.filestorage.views import add_file, delete_file, download_file, download_file_by_share_link, generate_special_link, get_files
 from users.views import userIsLogin, userLogOut, userLogin, userReg
 

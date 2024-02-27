@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,7 +43,14 @@ INSTALLED_APPS = [
     "filestorage",
     "users",
     "front",
+    'channels',
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -74,6 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "my_cloud.wsgi.application"
+ASGI_APPLICATION = "my_cloud.asgi.application"
 
 
 # Database

@@ -15,6 +15,30 @@ export const FileViewer = ({
     fetchFiles(userID, setData)
   }, [userID])
 
+  useEffect(() => {
+    const socket = new WebSocket('ws://localhost:8000/ws/notification/')
+    socket.onopen = () => {
+      console.log('WebSocket connected')
+    }
+
+    
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      fetchFiles(userID, setData)
+      console.log('Received message:', data.message)
+    }
+
+    socket.onclose = () => {
+      console.log('WebSocket disconnected')
+    }
+    socket.onerror = (error) => {
+      console.error('WebSocket Error:', error)
+    }
+    return () => {
+      socket.close()
+    }
+  }, [])
+
   return (
     <div>
       <ul className="fileList">
@@ -27,30 +51,36 @@ export const FileViewer = ({
               </p>
               <p>
                 <strong>Имя файла:</strong>
-                <span className='cardInfo'>{file.original_name}</span>
+                <span className="cardInfo">{file.original_name}</span>
               </p>
               <p>
                 <strong>Размер:</strong>{' '}
-                <span className='cardInfo'>{(file.size / (1024 * 1024)).toFixed(2)} Mb</span>
+                <span className="cardInfo">
+                  {(file.size / (1024 * 1024)).toFixed(2)} Mb
+                </span>
               </p>
               <p>
                 <strong>Загружено:</strong>
-                <span className='cardInfo'>{dataConverter(file.upload_date)}</span>
+                <span className="cardInfo">
+                  {dataConverter(file.upload_date)}
+                </span>
               </p>
               <p>
                 <strong>Последнее скачивание:</strong>{' '}
-                <span className='cardInfo'>{dataConverter(file.download_date)}</span>
+                <span className="cardInfo">
+                  {dataConverter(file.download_date)}
+                </span>
               </p>
               <p>
                 {file.special_link ? (
                   <p>
                     <strong>Одноразовая ссылка:</strong>
-                    <span className='cardInfo'>{file.special_link}</span>
+                    <span className="cardInfo">{file.special_link}</span>
                   </p>
                 ) : (
                   <p>
                     <strong>Одноразовая ссылка:</strong>
-                    <span className='cardInfo'>отсутствует</span>
+                    <span className="cardInfo">отсутствует</span>
                   </p>
                 )}
               </p>

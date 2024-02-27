@@ -149,9 +149,6 @@ def download_file(request, file_id):
         response = FileResponse(open(file_path, 'rb'), content_type=mime_type)
         response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'
 
-        # Отправляем чтобы фронт перерисовался
-        send_message_to_group("notification_group", {"text": "text"})
-
         return response
     
     except FileNotFoundError:
@@ -184,7 +181,7 @@ def generate_special_link(request, file_id):
     share_link = f"{server_address}/share/{file_instance.special_link}"
 
     # Отправляем чтобы фронт перерисовался
-    send_message_to_group("notification_group", {"text": "text"})
+    send_message_to_all({"text": "update link"})
 
 
     return JsonResponse({'special_link': share_link})
@@ -207,7 +204,7 @@ def download_file_by_share_link(request, share_link):
         file_instance.save()
 
         # Отправляем чтобы фронт перерисовался
-        send_message_to_all("text")
+        send_message_to_all({"text": "update link"})
 
         return response
         

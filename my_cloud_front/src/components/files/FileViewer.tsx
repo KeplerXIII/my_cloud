@@ -17,20 +17,16 @@ export const FileViewer = ({
 
   useEffect(() => {
     const socket = new WebSocket('ws://localhost:8000/ws/notification/')
-    socket.onopen = () => {
-      console.log('WebSocket connected')
-    }
+    socket.onopen = () => {}
 
-    
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data)
+    socket.onmessage = () => {
+      // const data = JSON.parse(event.data)
+      // console.log('Received message:', data.message)
       fetchFiles(userID, setData)
-      console.log('Received message:', data.message)
     }
 
-    socket.onclose = () => {
-      console.log('WebSocket disconnected')
-    }
+    socket.onclose = () => {}
+
     socket.onerror = (error) => {
       console.error('WebSocket Error:', error)
     }

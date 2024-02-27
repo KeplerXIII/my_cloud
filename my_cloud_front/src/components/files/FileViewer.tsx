@@ -22,31 +22,35 @@ export const FileViewer = ({
           <li key={file.id} className="fileItem">
             <div className="fileDetails">
               <p>
-                <strong>Автор:</strong> {file.author}
+                <strong>Автор:</strong>
+                <span>{file.author}</span>
               </p>
               <p>
-                <strong>Имя файла:</strong> {file.original_name}
+                <strong>Имя файла:</strong>
+                <span className='cardInfo'>{file.original_name}</span>
               </p>
               <p>
                 <strong>Размер:</strong>{' '}
-                {(file.size / (1024 * 1024)).toFixed(2)} Mb
+                <span className='cardInfo'>{(file.size / (1024 * 1024)).toFixed(2)} Mb</span>
               </p>
               <p>
-                <strong>Загружено:</strong> {dataConverter(file.upload_date)}
+                <strong>Загружено:</strong>
+                <span className='cardInfo'>{dataConverter(file.upload_date)}</span>
               </p>
               <p>
                 <strong>Последнее скачивание:</strong>{' '}
-                {dataConverter(file.download_date)}
+                <span className='cardInfo'>{dataConverter(file.download_date)}</span>
               </p>
               <p>
                 {file.special_link ? (
                   <p>
                     <strong>Одноразовая ссылка:</strong>
-                    {file.special_link}{' '}
+                    <span className='cardInfo'>{file.special_link}</span>
                   </p>
                 ) : (
                   <p>
-                    <strong>Одноразовая ссылка:</strong>отсутствует{' '}
+                    <strong>Одноразовая ссылка:</strong>
+                    <span className='cardInfo'>отсутствует</span>
                   </p>
                 )}
               </p>

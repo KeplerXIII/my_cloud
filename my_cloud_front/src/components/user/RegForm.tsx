@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import { FormData, authBlockProps } from '../models'
+import { FormData, authBlockProps } from '../../models'
 
 const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
   const [username, setCurrentUsername] = useState<string>('')

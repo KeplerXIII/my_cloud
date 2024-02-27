@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import { FileData } from '../models'
+import { FileData } from '../../models'
 
 export const fetchFiles = async (userID:string, setData: Dispatch<SetStateAction<FileData[]>>) => {
   try {

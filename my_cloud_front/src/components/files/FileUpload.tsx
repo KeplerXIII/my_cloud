@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { fetchFiles } from '../hooks/fetchFiles'
-import { FileViewerType } from '../models'
+import { fetchFiles } from './fetchFiles'
+import { FileViewerType } from '../../models'
 
 export const FileUpload = ({ userID, setData }: FileViewerType) => {
   const [file, setFile] = useState<File | null>(null)

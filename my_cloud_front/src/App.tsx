@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { HomePage } from './components/HomePage'
-import { MyFiles } from './components/MyFiles'
-import { Registration } from './components/Registrarion'
+import { HomePage } from './components/main/HomePage'
+import { MyFiles } from './components/files/MyFiles'
+import { Registration } from './components/user/Registrarion'
 import { Menu } from './components/Menu'
 
 import './App.css'

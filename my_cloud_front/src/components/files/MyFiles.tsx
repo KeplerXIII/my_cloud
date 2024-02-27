@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import FileUpload from './FileUpload'
 import { FileViewer } from './FileViewer'
-import { FileData } from '../models'
+import { FileData } from '../../models'
 
 export const MyFiles = () => {
   const [userID, setUserID] = useState('')

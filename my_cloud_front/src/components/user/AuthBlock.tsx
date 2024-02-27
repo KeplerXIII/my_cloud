@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FormData, authBlockProps } from '../models'
+import { FormData, authBlockProps } from '../../models'
 
 const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
   const [username, setCurrentUsername] = useState('')

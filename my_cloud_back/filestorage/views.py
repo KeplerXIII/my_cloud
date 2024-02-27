@@ -73,7 +73,6 @@ def get_files(request, user_id):
         'special_link': f"{server_address}/share/{file.special_link}" if file.special_link else None
         } for file in files]
 
-    print(file_data)
     return JsonResponse({'files': file_data}, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt

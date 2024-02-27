@@ -15,7 +15,7 @@ class UploadedFile(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     last_download_date = models.DateTimeField(null=True, blank=True)
     comment = models.TextField(blank=True)
-    special_link = models.CharField(max_length=255, blank=True)
+    special_link = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.original_name

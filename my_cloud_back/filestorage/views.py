@@ -1,6 +1,9 @@
 import json
 import mimetypes
 import os
+import random
+import string
+from dotenv import load_dotenv
 from django.utils import timezone
 from wsgiref.types import FileWrapper
 from django.http import FileResponse, HttpResponse, JsonResponse, HttpResponseBadRequest
@@ -11,6 +14,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 
 from filestorage.models import UploadedFile
+load_dotenv()
+
 
 @csrf_exempt
 # @login_required
@@ -90,6 +95,7 @@ def delete_file(request, file_id):
 
     return JsonResponse({'message': 'Файл успешно удален'}, json_dumps_params={'ensure_ascii': False})
 
+
 @login_required
 def download_file(request, file_id):
     try:
@@ -110,6 +116,55 @@ def download_file(request, file_id):
         response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'
         return response
     
+    except FileNotFoundError:
+        return JsonResponse({'message': 'Файл не найден'}, status=404, json_dumps_params={'ensure_ascii': False})
+    except Exception as e:
+        return JsonResponse({'message': f'Ошибка при скачивании файла: {str(e)}', }, status=500, json_dumps_params={'ensure_ascii': False})
+    
+@login_required
+def generate_special_link(request, file_id):
+    # Получаем экземпляр файла из базы данных
+    file_instance = get_object_or_404(UploadedFile, id=file_id)
+
+    # Проверяем права доступа
+    if not request.user.is_staff and file_instance.user != request.user:
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403, json_dumps_params={'ensure_ascii': False})
+
+    # Генерируем случайный код
+    code = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
+    # Сохраняем код в поле special_link
+    file_instance.special_link = code
+    file_instance.save()
+    
+    host = os.getenv('HOST')
+    port = os.getenv('PORT')
+
+    # Формируем ссылку
+    server_address = f'{host}:{port}'  # Замените на реальный адрес вашего сервера
+    share_link = f"{server_address}/share/{file_instance.special_link}"
+
+    return JsonResponse({'special_link': share_link})
+
+def download_file_by_share_link(request, share_link):
+    try:
+        file_instance = get_object_or_404(UploadedFile, special_link=share_link)
+        file_path = file_instance.file.path
+
+        mime_type, _ = mimetypes.guess_type(file_path)
+
+        # Обновление последней даты скачивания
+        file_instance.last_download_date = timezone.now()
+        file_instance.save()
+
+        response = FileResponse(open(file_path, 'rb'), content_type=mime_type)
+        response['Content-Disposition'] = f'attachment; filename="{file_instance.original_name}"'
+
+        file_instance.special_link = None
+        file_instance.save()
+
+        return response
+        
     except FileNotFoundError:
         return JsonResponse({'message': 'Файл не найден'}, status=404, json_dumps_params={'ensure_ascii': False})
     except Exception as e:

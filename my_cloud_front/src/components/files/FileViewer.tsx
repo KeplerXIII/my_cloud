@@ -4,6 +4,7 @@ import { fetchFiles } from './fetchFiles'
 import { dataConverter } from './dateConverter'
 import { FileDeleteButton } from './DeleteButton'
 import { FileDownloadButton } from './DownloadButton'
+import { FileShareButton } from './ShareButton'
 
 export const FileViewer = ({
   userID,
@@ -49,7 +50,11 @@ export const FileViewer = ({
                 userID={userID}
                 setData={setData}
               />
-              <button className="shareButton">&#128279;</button>
+              <FileShareButton
+                fileID={file.id}
+                userID={userID}
+                setData={setData}
+              />
             </div>
           </li>
         ))}

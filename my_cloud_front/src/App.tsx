@@ -9,7 +9,7 @@ import './App.css'
 
 function App() {
   return (
-    <div>
+    <div className='globe'>
       <Menu />
       <div className="page">
         <Routes>

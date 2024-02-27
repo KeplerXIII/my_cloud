@@ -49,9 +49,9 @@ def get_files(request, user_id):
 
     # Загрузка файлов пользователя или всех файлов, если пользователь администратор
     if request.user.is_staff:
-        files = UploadedFile.objects.all()
+        files = UploadedFile.objects.all().order_by('id')
     else:
-        files = UploadedFile.objects.filter(user=user)
+        files = UploadedFile.objects.filter(user=user).order_by('id')
 
     # Создаем список данных о файлах
 

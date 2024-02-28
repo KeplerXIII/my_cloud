@@ -50,4 +50,6 @@ export type UserListType = {
   userID: number
   userName: string
   isAdmin: boolean
+  totalStorageSize: number
+  totalStorageCount: number
 }

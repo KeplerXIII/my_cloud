@@ -3,11 +3,13 @@ from django.db import IntegrityError
 from rest_framework import generics
 from django.contrib.auth.models import User
 
+from filestorage.models import UploadedFile
+
 from .serializers import UserSerializer
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, Count
 # Create your views here.
 
 class UserCreateView(generics.CreateAPIView):
@@ -64,17 +66,27 @@ def user_is_login(request):
     else:
         return HttpResponseBadRequest(json.dumps({'login': 'false'}), content_type='application/json')
 
-@login_required
 def get_all_users(request):
     if not request.user.is_staff:
         return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
 
     users = User.objects.all()
 
-    user_data = [{
-        'userID': user.id,
-        'userName': user.username,
-        'isAdmin': user.is_staff,
-    } for user in users]
+    user_data = []
+    
+    for user in users:
+        # Получаем сумму размеров файлов пользователя
+        total_size = UploadedFile.objects.filter(user=user).aggregate(Sum('size'))['size__sum'] or 0
+
+        # Получаем количество файлов пользователя
+        total_count = UploadedFile.objects.filter(user=user).count()
+
+        user_data.append({
+            'userID': user.id,
+            'userName': user.username,
+            'isAdmin': user.is_staff,
+            'totalStorageSize': total_size,
+            'totalStorageCount': total_count,
+        })
 
     return JsonResponse({'users': user_data}, json_dumps_params={'ensure_ascii': False})

@@ -31,18 +31,18 @@ const AdmUsersList = () => {
   if (loading) {
     return <p>Загрузка...</p>
   }
-  console.log(users)
 
   return (
     <>
       {showAdm && (
-        <div>
-          <h2>Список пользователей:</h2>
+        <div className="admPanel">
+          <h2 className="admListHeader">Список пользователей:</h2>
           <ul>
             {users.map((user) => (
-              <li key={user.userID}>
+              <li key={user.userID} className="userListItem">
                 {user.userName} (ID: {user.userID}, Админ:{' '}
-                {user.isAdmin ? 'Да' : 'Нет'})
+                {user.isAdmin ? 'Да' : 'Нет'}), Всего файлов:
+                {user.totalStorageCount}, Объём: {user.totalStorageSize}
               </li>
             ))}
           </ul>

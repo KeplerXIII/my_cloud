@@ -71,7 +71,7 @@ button {
   color: #9292a6;
 }
 
-.articleForm {
+.userProfile {
   align-items: center;
   display: flex;
   justify-content: space-evenly;
@@ -170,4 +170,16 @@ p {
 
 .redButton {
   background-color: #9f3f3f;
+}
+
+.admListHeader {
+  color: #c7c7c7;
+}
+
+.userListItem {
+  color: aliceblue;
+  border: 2px solid #3498db;
+  padding: 5px;
+  margin-bottom: 5px;
+  list-style-type: none;
 }

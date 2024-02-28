@@ -50,7 +50,7 @@ export const Registration = () => {
 
   if (!checkData) return <article className="articleForm">Loading...</article>
   return (
-    <article className="articleForm">
+    <div className="userProfile">
       {!loggedIn ? (
         <>
           <div>
@@ -67,14 +67,16 @@ export const Registration = () => {
           </div>
         </>
       ) : (
-        <>
-          <p className="formText">{username}, вы успешно авторизованы!</p>
-          <button type="submit" onClick={handleLogOut}>
-            Выйти
-          </button>
-          <AdmUsersList/>
-        </>
+        <div className="mainProfile">
+          <div className='userProfile'>
+            <p className="formText">{username}, вы успешно авторизованы!</p>
+            <button type="submit" onClick={handleLogOut}>
+              Выйти
+            </button>
+          </div>
+          <AdmUsersList />
+        </div>
       )}
-    </article>
+    </div>
   )
 }

@@ -31,3 +31,29 @@
 - **djangorestframework**
 - **channels**
 - **daphne**
+
+Установка на сервер
+1. БД запускается в контейнере, поэтому для его работы нужен работающий Docker на сервере.
+   Установим доукер
+   sudo apt install docker.io
+   sudo systemctl start docker
+
+  Докер композ
+   sudo apt install python3 python3-pip
+   sudo pip3 install docker-compose
+
+  Менеджер пакетов 
+    pip install poetry
+
+  Установим зависимости
+    poetry install
+
+  Входим в оболочку 
+    poetry shell
+
+    sudo apt install postgresql
+    sudo service postgresql start
+    sudo -u postgres psql
+    CREATE USER admin WITH PASSWORD 'admin'
+
+    createdb -h your_host -p your_port -U your_username -E UTF8 your_database_name

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from my_cloud_back.filestorage.views import add_file, delete_file, download_file, generate_special_link, get_files, update_file_name
+from filestorage.views import add_file, delete_file, download_file, generate_special_link, get_files, update_file_name
 
 
 urlpatterns = [

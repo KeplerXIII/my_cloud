@@ -1,6 +1,6 @@
 from django.urls import path
 
-from my_cloud_back.users.views import delete_user, get_all_users, user_is_login, user_log_out, user_login, user_reg, toggle_adm
+from users.views import delete_user, get_all_users, user_is_login, user_log_out, user_login, user_reg, toggle_adm
 
 
 urlpatterns = [

@@ -5,8 +5,7 @@ import random
 import string
 from dotenv import load_dotenv
 from django.utils import timezone
-from wsgiref.types import FileWrapper
-from django.http import FileResponse, HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.http import FileResponse, JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404

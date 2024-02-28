@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from front import views
-from my_cloud_back.filestorage.views import download_file_by_share_link
+from filestorage.views import download_file_by_share_link
 
 urlpatterns = [
     path("", views.index),

@@ -29,7 +29,7 @@ export const HomePage = () => {
         </p>
         <p className="mainParagraph">
           <strong>Для разработки использовались:</strong>
-          <ul>
+          <ul className="libList">
             <li>Python - для разработки back части приложения </li>
             <li>
               JavaScript\TypeScript - для разработки front части приложения.
@@ -38,7 +38,7 @@ export const HomePage = () => {
         </p>
         <p className="mainParagraph">
           <strong>В качестве библиотек и фреймворков:</strong>
-          <ul>
+          <ul className="libList">
             <li>Django</li>
             <li>React</li>
             <li>psycopg2</li>

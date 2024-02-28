@@ -111,7 +111,7 @@ button {
   justify-content: space-between;
   display: flex;
   align-items: center;
-  border: 2px solid #3498db; /* Цвет рамки */
+  border: 2px solid bisque; /* Цвет рамки */
   padding: 10px;
   margin-bottom: 10px;
   list-style-type: none; /* Убирает маркеры списка */
@@ -181,7 +181,7 @@ p {
   align-items: center;
   justify-content: space-between;
   color: aliceblue;
-  border: 2px solid #3498db;
+  border: 2px solid bisque;
   padding: 5px;
   margin-bottom: 5px;
   list-style-type: none;
@@ -189,7 +189,7 @@ p {
 
 .admControlPanel {
   margin-left: 30px;
-  border: cadetblue;
+  border: bisque;
   border-style: solid;
   padding: 3px;
 }

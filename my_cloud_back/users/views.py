@@ -70,7 +70,7 @@ def get_all_users(request):
     if not request.user.is_staff:
         return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
 
-    users = User.objects.all()
+    users = User.objects.all().order_by('id')
 
     user_data = []
     

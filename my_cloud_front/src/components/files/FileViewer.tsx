@@ -5,6 +5,7 @@ import { dataConverter } from './dateConverter'
 import { FileDeleteButton } from './buttons/DeleteButton'
 import { FileDownloadButton } from './buttons/DownloadButton'
 import { FileShareButton } from './buttons/ShareButton'
+import { FileNameEditor } from './FileNameEditor'
 
 export const FileViewer = ({
   userID,
@@ -47,7 +48,12 @@ export const FileViewer = ({
               </p>
               <p>
                 <strong>Имя файла:</strong>
-                <span className="cardInfo">{file.original_name}</span>
+                <FileNameEditor
+                  fileID={file.id}
+                  fileName={file.original_name}
+                  userID={userID}
+                  setData={setData}
+                />
               </p>
               <p>
                 <strong>Размер:</strong>{' '}

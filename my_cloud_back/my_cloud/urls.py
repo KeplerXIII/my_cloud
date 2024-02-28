@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from front import views
 from my_cloud_back.filestorage.consumer import NotificationConsumer
-from my_cloud_back.filestorage.views import add_file, delete_file, download_file, download_file_by_share_link, generate_special_link, get_files
+from my_cloud_back.filestorage.views import add_file, delete_file, download_file, download_file_by_share_link, generate_special_link, get_files, update_file_name
 from users.views import userIsLogin, userLogOut, userLogin, userReg
 
 
@@ -37,4 +37,5 @@ urlpatterns = [
     path('api/files/delete_file/<int:file_id>/', delete_file, name='delete_file'),
     path('api/files/download_file/<int:file_id>/', download_file, name='download_file'),
     path('api/files/generate_special_link/<int:file_id>/', generate_special_link, name='download_file'),
+    path('api/files/update_file_name/<int:file_id>', update_file_name, name='update_file_name')
 ]

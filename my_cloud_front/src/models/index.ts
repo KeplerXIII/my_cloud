@@ -38,3 +38,10 @@ export type FileButtonType = {
   userID: string
   setData: Dispatch<SetStateAction<FileData[]>>
 }
+
+export type FileNameEditorType = {
+  fileID: number
+  fileName: string
+  userID: string
+  setData: Dispatch<SetStateAction<FileData[]>>
+}

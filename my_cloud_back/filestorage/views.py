@@ -129,6 +129,42 @@ def delete_file(request, file_id):
 
     return JsonResponse({'message': 'Файл успешно удален'}, json_dumps_params={'ensure_ascii': False})
 
+@csrf_exempt
+@login_required
+def update_file_name(request, file_id):
+    try:
+        # Получаем экземпляр файла из базы данных
+        file_instance = get_object_or_404(UploadedFile, id=file_id)
+
+        # Проверяем права доступа
+        if not request.user.is_staff and file_instance.user != request.user:
+            return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403, json_dumps_params={'ensure_ascii': False})
+
+        # Проверяем, что метод запроса - PATCH
+        if request.method == 'PATCH':
+            # Получаем новое имя файла из тела запроса
+            data = json.loads(request.body)
+            new_name = data.get('newFileName', None)
+
+            print(new_name)
+            # Проверяем, было ли передано новое имя
+            if not new_name:
+                return JsonResponse({'message': 'Необходимо предоставить новое имя файла'}, status=400, json_dumps_params={'ensure_ascii': False})
+
+            # Обновляем имя файла в базе данных
+            file_instance.original_name = new_name
+            file_instance.save()
+
+            # Отправляем уведомление о обновлении имени файла
+            send_message_to_all({"text": "update file name"})
+
+            return JsonResponse({'message': 'Имя файла успешно обновлено'})
+        else:
+            return JsonResponse({'message': 'Метод запроса должен быть PATCH'}, status=405, json_dumps_params={'ensure_ascii': False})
+
+    except Exception as e:
+        return JsonResponse({'message': f'Ошибка при обновлении имени файла: {str(e)}'}, status=500, json_dumps_params={'ensure_ascii': False})
+
 
 @login_required
 def download_file(request, file_id):

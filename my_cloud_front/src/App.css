@@ -76,7 +76,6 @@ button {
   display: flex;
   justify-content: space-evenly;
   padding: 35px;
-  
 }
 
 .divider {
@@ -84,7 +83,6 @@ button {
   width: 2px;
   background-color: #260f26;
 }
-
 
 .fileInputBlock {
   display: grid;
@@ -96,21 +94,20 @@ button {
   color: aliceblue;
 }
 
-
 .fileItem {
   color: white;
   border: 2px solid #3498db;
   padding: 10px;
   margin-bottom: 10px;
-  list-style-type: none; 
+  list-style-type: none;
 }
 
 .fileItem:hover {
-  background-color: hsl(0, 22%, 30%); 
+  background-color: hsl(0, 22%, 30%);
 }
 
 .fileItem {
-  white-space: nowrap; 
+  white-space: nowrap;
   justify-content: space-between;
   display: flex;
   align-items: center;
@@ -155,9 +152,22 @@ p {
 }
 
 .cardInfo {
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .fileDetails {
   width: 300px;
+}
+
+.editButton {
+  height: 25px;
+  padding: 2px;
+}
+
+.editInput {
+  height: 25px;
+}
+
+.redButton {
+  background-color: #9f3f3f;
 }

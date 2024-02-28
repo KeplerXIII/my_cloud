@@ -17,7 +17,9 @@ export const FileViewer = ({
   }, [userID])
 
   useEffect(() => {
-    const socket = new WebSocket(`ws://${import.meta.env.VITE_WEBSOCKET_HOST}:${import.meta.env.VITE_WEBSOCKET_PORT}/ws/notification/`)
+    const socket = new WebSocket(
+      `ws://${import.meta.env.VITE_WEBSOCKET_HOST}:${import.meta.env.VITE_WEBSOCKET_PORT}/ws/notification/`,
+    )
     socket.onopen = () => {}
 
     socket.onmessage = () => {

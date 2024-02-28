@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import AuthBlock from './AuthBlock'
+import AuthBlock from './AuthForm'
 import RegistrationForm from './RegForm'
+import AdmUsersList from './AdmPanel'
 
 export const Registration = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -71,6 +72,7 @@ export const Registration = () => {
           <button type="submit" onClick={handleLogOut}>
             Выйти
           </button>
+          <AdmUsersList/>
         </>
       )}
     </article>

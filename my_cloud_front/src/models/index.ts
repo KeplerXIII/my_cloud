@@ -45,3 +45,9 @@ export type FileNameEditorType = {
   userID: string
   setData: Dispatch<SetStateAction<FileData[]>>
 }
+
+export type UserListType = {
+  userID: number
+  userName: string
+  isAdmin: boolean
+}

@@ -16,7 +16,7 @@ class UserCreateView(generics.CreateAPIView):
 
 
 @csrf_exempt
-def userReg(request):
+def user_reg(request):
     try:
         data = json.loads(request.body)
         username = data.get('username')
@@ -40,12 +40,12 @@ def userReg(request):
     return JsonResponse({'username': user.username, 'email': user.email})
 
 @csrf_exempt
-def userLogOut(request):
+def user_log_out(request):
     logout(request)
     return HttpResponse(json.dumps({'logout': 'true'}), content_type='application/json')
 
 @csrf_exempt
-def userLogin(request):
+def user_login(request):
     data = json.loads(request.body)
     username = data.get('username')
     password = data.get('password')
@@ -58,8 +58,23 @@ def userLogin(request):
 
 @csrf_exempt
 # @login_required
-def userIsLogin(request):
+def user_is_login(request):
     if request.user.is_authenticated:
         return HttpResponse(json.dumps({'login': 'true', 'username': request.user.username, 'id': request.user.id}), content_type='application/json')
     else:
         return HttpResponseBadRequest(json.dumps({'login': 'false'}), content_type='application/json')
+
+@login_required
+def get_all_users(request):
+    if not request.user.is_staff:
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
+
+    users = User.objects.all()
+
+    user_data = [{
+        'userID': user.id,
+        'userName': user.username,
+        'isAdmin': user.is_staff,
+    } for user in users]
+
+    return JsonResponse({'users': user_data}, json_dumps_params={'ensure_ascii': False})

@@ -14,21 +14,46 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
     else if (name === 'email') setEmail(value)
   }
 
+  const validateUsername = (input: string): boolean => {
+    const usernameRegex = /^[a-zA-Z][a-zA-Z0-9]{3,19}$/
+    return usernameRegex.test(input)
+  }
+
+  const validatePassword = (input: string): boolean => {
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+    return passwordRegex.test(input)
+  }
+
+  const validateEmail = (input: string): boolean => {
+    // Простая проверка формата email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(input)
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     setRegErr('')
-    if (username === '') {
-      setCurrentUsername('Укажите имя пользователя')
+
+    if (!validateUsername(username)) {
+      setRegErr(
+        'Логин должен состоять из латинских букв и цифр, начинаться с буквы и иметь длину от 4 до 20 символов',
+      )
       return
     }
-    if (email === '') {
-      setEmail('Укажите email')
+
+    if (!validatePassword(password)) {
+      setRegErr(
+        'Пароль должен быть не менее 6 символов и содержать по крайней мере одну заглавную букву, одну цифру и один специальный символ',
+      )
       return
     }
-    if (password === '') {
-      setCurrentUsername('Укажите Пароль')
+
+    if (!validateEmail(email)) {
+      setRegErr('Введите корректный адрес электронной почты')
       return
     }
+
     const formData: FormData = {
       username,
       password,
@@ -47,8 +72,11 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
 
       if (response.ok) {
         const data = await response.json()
-        setLoggedIn(true)
-        setUsername(data.username)
+        setRegErr('Регистрация успешна, авторизуемся!')
+        setTimeout(() => {
+          setLoggedIn(true)
+          setUsername(data.username)
+        }, 2000)
       } else {
         console.error('Ошибка при регистрации')
         setRegErr('Пользователь уже зарегистрирован.')

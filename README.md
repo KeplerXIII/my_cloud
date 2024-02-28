@@ -57,3 +57,9 @@
     CREATE USER admin WITH PASSWORD 'admin'
 
     createdb -h your_host -p your_port -U your_username -E UTF8 your_database_name
+
+    NEW
+    git clone
+    sudo apt install python3
+    sudo apt install python3-pip
+    pip install poetry

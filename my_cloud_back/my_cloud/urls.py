@@ -15,9 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, include
 from front import views
-from my_cloud_back.filestorage.consumer import NotificationConsumer
 from my_cloud_back.filestorage.views import add_file, delete_file, download_file, download_file_by_share_link, generate_special_link, get_files, update_file_name
 from users.views import userIsLogin, userLogOut, userLogin, userReg
 
@@ -27,15 +26,10 @@ urlpatterns = [
     path("my_files/", views.index),
     path("registration/", views.index),
     path("admin/", admin.site.urls),
+
     path("share/<str:share_link>", download_file_by_share_link, name='download-share'),
-    path('api/register/', userReg, name='user-create'),
-    path('api/login/', userLogin, name='user-login'),
-    path('api/logout/', userLogOut, name='user-logOut'),
-    path('api/islogin/', userIsLogin, name='user-logOut'),
-    path('api/files/add/', add_file, name='add-file'),
-    path('api/files/<int:user_id>/', get_files, name='get_files'),
-    path('api/files/delete_file/<int:file_id>/', delete_file, name='delete_file'),
-    path('api/files/download_file/<int:file_id>/', download_file, name='download_file'),
-    path('api/files/generate_special_link/<int:file_id>/', generate_special_link, name='download_file'),
-    path('api/files/update_file_name/<int:file_id>', update_file_name, name='update_file_name')
+
+    path('api/user/', include('users.urls')),
+
+    path('api/files/', include('filestorage.urls')),
 ]

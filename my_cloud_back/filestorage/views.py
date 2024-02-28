@@ -10,13 +10,11 @@ from django.http import FileResponse, HttpResponse, JsonResponse, HttpResponseBa
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 from filestorage.models import UploadedFile
-from my_cloud_back.filestorage.consumer import NotificationConsumer
 
 load_dotenv()
 

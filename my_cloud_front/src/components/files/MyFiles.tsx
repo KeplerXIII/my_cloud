@@ -11,7 +11,7 @@ export const MyFiles = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/islogin/', {
+        const response = await fetch('/api/user/islogin/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

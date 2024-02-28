@@ -8,7 +8,7 @@ export const Registration = () => {
   const [checkData, setCheckData] = useState(false)
 
   const handleLogOut = async (): Promise<void> => {
-    const response = await fetch('/api/logout/', {
+    const response = await fetch('/api/user/logout/', {
       method: 'GET',
       mode: 'no-cors',
       headers: {
@@ -25,7 +25,7 @@ export const Registration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/islogin/', {
+        const response = await fetch('/api/user/islogin/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

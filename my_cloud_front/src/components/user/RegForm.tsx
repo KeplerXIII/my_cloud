@@ -36,7 +36,7 @@ const RegistrationForm = ({ setLoggedIn, setUsername }: authBlockProps) => {
     }
 
     try {
-      const response = await fetch('/api/register/', {
+      const response = await fetch('/api/user/registration/', {
         method: 'POST',
         mode: 'no-cors',
         headers: {

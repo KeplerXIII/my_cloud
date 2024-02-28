@@ -18,7 +18,7 @@ const AuthBlock = ({ setLoggedIn, setUsername }: authBlockProps) => {
     }
 
     try {
-      const response = await fetch('/api/login/', {
+      const response = await fetch('/api/user/login/', {
         method: 'POST',
         mode: 'no-cors',
         headers: {

@@ -177,9 +177,19 @@ p {
 }
 
 .userListItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   color: aliceblue;
   border: 2px solid #3498db;
   padding: 5px;
   margin-bottom: 5px;
   list-style-type: none;
+}
+
+.admControlPanel {
+  margin-left: 30px;
+  border: cadetblue;
+  border-style: solid;
+  padding: 3px;
 }

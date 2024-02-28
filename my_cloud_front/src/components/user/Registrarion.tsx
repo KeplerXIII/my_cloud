@@ -70,7 +70,7 @@ export const Registration = () => {
         <div className="mainProfile">
           <div className='userProfile'>
             <p className="formText">{username}, вы успешно авторизованы!</p>
-            <button type="submit" onClick={handleLogOut}>
+            <button type="submit" className='editButton' onClick={handleLogOut}>
               Выйти
             </button>
           </div>

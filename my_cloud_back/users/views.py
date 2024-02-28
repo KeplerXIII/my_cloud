@@ -90,3 +90,28 @@ def get_all_users(request):
         })
 
     return JsonResponse({'users': user_data}, json_dumps_params={'ensure_ascii': False})
+
+def delete_user(request, user_id):
+    if not request.user.is_staff:
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403)
+
+    try:
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return JsonResponse({'delete': True}, json_dumps_params={'ensure_ascii': False})
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'Пользователь не найден'}, status=404, json_dumps_params={'ensure_ascii': False})
+    
+def toggle_adm(request, user_id):
+    if not request.user.is_staff:
+        return JsonResponse({'message': 'Недостаточно прав доступа'}, status=403, json_dumps_params={'ensure_ascii': False})
+
+    try:
+        user = User.objects.get(id=user_id)
+        user.is_staff = not user.is_staff
+        user.save()
+
+        return JsonResponse({'message': 'Права пользователя успешно изменены'}, json_dumps_params={'ensure_ascii': False})
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'Пользователь не найден'}, status=404, json_dumps_params={'ensure_ascii': False})
+

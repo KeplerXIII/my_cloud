@@ -145,7 +145,6 @@ def update_file_name(request, file_id):
             data = json.loads(request.body)
             new_name = data.get('newFileName', None)
 
-            print(new_name)
             # Проверяем, было ли передано новое имя
             if not new_name:
                 return JsonResponse({'message': 'Необходимо предоставить новое имя файла'}, status=400, json_dumps_params={'ensure_ascii': False})

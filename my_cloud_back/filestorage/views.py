@@ -51,7 +51,7 @@ def send_message_to_all(message):
     return True
 
 @csrf_exempt
-# @login_required
+@login_required
 def add_file(request):
     if request.method == 'POST' and request.user.is_authenticated:
         uploaded_file = request.FILES.get('file')
@@ -73,7 +73,8 @@ def add_file(request):
 
     return HttpResponseBadRequest(json.dumps({'message': 'Необходима авторизация'}), content_type='application/json')
 
-
+@csrf_exempt
+@login_required
 def get_files(request, user_id):
     # Проверяем, является ли пользователь администраторомl
     if not request.user.is_staff:

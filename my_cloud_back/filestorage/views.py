@@ -210,7 +210,7 @@ def generate_special_link(request, file_id):
     port = os.getenv('PORT')
 
     # Формируем ссылку
-    server_address = f'{host}:{port}'  # Замените на реальный адрес вашего сервера
+    server_address = f'{host}'  # Замените на реальный адрес вашего сервера
     share_link = f"{server_address}/share/{file_instance.special_link}"
 
     # Отправляем чтобы фронт перерисовался

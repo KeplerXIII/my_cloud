@@ -14,6 +14,8 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,7 @@ SECRET_KEY = "django-insecure-=$8drpq$(0n-twlfhe*rv$cxtjk$m#*1218u8kllib&j(v+y_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
 
 
 # Application definition
@@ -87,7 +89,7 @@ ASGI_APPLICATION = "my_cloud.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-load_dotenv()
+
 DATABASES = {
     "default": {
        'ENGINE': 'django.db.backends.postgresql',

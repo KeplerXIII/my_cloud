@@ -33,33 +33,29 @@
 - **daphne**
 
 Установка на сервер
-1. БД запускается в контейнере, поэтому для его работы нужен работающий Docker на сервере.
-   Установим доукер
-   sudo apt install docker.io
-   sudo systemctl start docker
+ 1. Убедитесь что у вас уставновлены свежие пакеты приложений:
+ - sudo apt update
+ - sudo atp upgrade
+   
+ 2. Установите и подготовьте базу данных для работы, подразумевается PostgreSQL:
+ - sudo apt install postgresql
+ - sudo service postgresql start
+ - sudo -u postgres psql
+ - CREATE USER user WITH PASSWORD 'user' (создадим пользователя для подключения)
+ - createdb -h your_host -p your_port -U your_username -E UTF8 your_database_name (создадим БД)
 
-  Докер композ
-   sudo apt install python3 python3-pip
-   sudo pip3 install docker-compose
+ 3. Скачайте проект на сервер и перейдите в папку проекта:
+ - git clone https://github.com/KeplerXIII/my_cloud.git
 
-  Менеджер пакетов 
-    pip install poetry
+ 5. Для удобства в корне проекта лежит файл .env.example, заполните его данными, в том числе
+   для подключения к созданной вами БД.
 
-  Установим зависимости
-    poetry install
+ 6. В качестве менеджера пакетов используется poetry, поэтому необходимо его установть:
+ - sudo apt install python3
+ - sudo apt install python3-pip
+ - pip install poetry
 
-  Входим в оболочку 
-    poetry shell
-
-    sudo apt install postgresql
-    sudo service postgresql start
-    sudo -u postgres psql
-    CREATE USER admin WITH PASSWORD 'admin'
-
-    createdb -h your_host -p your_port -U your_username -E UTF8 your_database_name
-
-    NEW
-    git clone
-    sudo apt install python3
-    sudo apt install python3-pip
-    pip install poetry
+ 6. Серверная часть проекта находится в папк my_cloud_back, перейдите в неё установите зависимости
+    и активируйте виртуальное окружение:
+ -  poetry install
+ -  poetry shell

@@ -31,6 +31,7 @@
 - **djangorestframework**
 - **channels**
 - **daphne**
+- **nginx**
 
 # Установка на сервер
 

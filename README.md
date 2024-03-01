@@ -88,6 +88,29 @@
 
 9. Для организации работы сервера мы используем Daphne в качестве ASGI и NGINX в качестве WEB-сервера. Проверьте, установлены ли они, если нет, установите. Проект уже настроен для работы по ASGI, и вы можете запустить его из папки `my_cloud_back` при помощи команды:
    - `daphne -b 127.0.0.1 -p 8000 my_clud.asgi:application` (адрес и порт указывайте тот, который укажем в настройках к NGINX)
+   - `nano /etc/systemd/daphne.service` (для создания файла конфигурации)
+   В нём укажите конфигурацию, располложение виртуального окружения и путь рабочей директории может отличаться:
+     ```
+      [Unit]
+      Description=daphne service
+      After=network.target
+      
+      [Service]
+      User=root
+      Group=www-data
+      WorkingDirectory=/home/root/my_cloud/my_cloud_back/
+      ExecStart=/root/.cache/pypoetry/virtualenvs/my-cloud-tVnIVMkN-py3.10/bin/daphne -b 127.0.0.1 -p 8000 my_cloud.asgi:application
+      StandardOutput=syslog
+      StandardError=syslog
+      SyslogIdentifier=daphne
+      
+      [Install]
+      WantedBy=multi-user.target
+     ```
+  - `sudo systemctl daemon-reload` - для того чтобы параметры вступили в силу
+  - `sudo systemctl start daphne` - для запуска
+  - `sudo systemctl enable daphne` - для включения режима автозагрузки
+  - `sudo systemctl status daphne` - для проверки статуса
 
 10. **Опционально:** Так как пользовательская часть написана с использованием React, она собирается с помощью бандлера Vite, и в пользовательской части есть необходимость настройки WebSocket соединения для его корректной работы. Требуется пересобрать проект. Для этого понадобится yarn, тк он был использован как менеджер и обновить node.
 

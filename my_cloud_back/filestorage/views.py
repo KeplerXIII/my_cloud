@@ -89,7 +89,7 @@ def get_files(request, user_id):
         files = UploadedFile.objects.filter(user=user).order_by('id')
 
     # Создаем список данных о файлах
-    server_address = f'{host}:{port}'  # Замените на реальный адрес вашего сервера
+    server_address = f'{host}'
 
     file_data = [{
         'id': file.id, 
